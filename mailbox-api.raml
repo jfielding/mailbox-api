@@ -1,0 +1,64 @@
+#%RAML 1.0
+title: Mailbox API
+version: 1.0
+baseUri: http://shipping.cloudhub.io/api/{version}
+/mailbox:
+  post:
+    description: "Retrieve the dimensions of a mailbox for a given address"
+    body:
+      application/json:
+        example: |
+          { 
+             "Address" : {
+                "Address1" : "6406 Ivy Lane",
+                "Address2" : "",
+                "City" : "Greenbelt",
+                "State" : "MD",
+                "Zip5" : 12345,
+                "Zip4" : 1234
+             }
+          }
+    responses: 
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "Mailbox" : {
+                  "Length" : 22.8,
+                  "Width" : 11,
+                  "Height" : 15,
+                  "Type" : "Curbside"
+                }
+              }
+  /fit:
+    post:
+      description: "Determine if a package would fit in a mailbox by given address"
+      body:
+        application/json:
+          example: |
+            { 
+               "Package" : { 
+                 "Address" : {
+                    "Address1" : "",
+                    "Address2" : "6406 Ivy Lane",
+                    "City" : "Greenbelt",
+                    "State" : "MD",
+                    "Zip5" : 12345,
+                    "Zip4" : 1234
+                 },
+                 "Parcel" : {
+                    "Length" : 22.8,
+                    "Width" : 11,
+                    "Height" : 15
+                 }
+               }
+            }
+      responses: 
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "Fit" : true
+                }
